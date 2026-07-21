@@ -1,0 +1,12 @@
+name: ipchains
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/ipchains.yml
+ruleset: kernel_ulogd_parsing
+notes: "Firewall packet log mappings."
+rules:
+  - id: 700
+    fields:
+      "[Category][0]": "Network.Dropped"
+      "[Priority]": "Medium"
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+      "[Target][0][IP]": "%{[Attachment][RawLog][Content][destination][address]}"
+      "[Description]": "Packet dropped: %{[Attachment][RawLog][Content][message]}"

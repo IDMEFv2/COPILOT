@@ -1,0 +1,16 @@
+name: honeyd
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/honeyd.yml
+ruleset: honeyd_parsing
+notes: "Honeypot connection events."
+rules:
+  - id: 2600
+    fields:
+      "[Category][0]": "Recon.Scanning"
+      "[Priority]": "Medium"
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+      "[Description]": "Attempted connection to closed/filtered port from %{[Attachment][RawLog][Content][source][address]}"
+  - id: 2604
+    fields:
+      "[Category][0]": "Network.Connection"
+      "[Priority]": "Info"
+      "[Description]": "Connection established from %{[Attachment][RawLog][Content][source][address]} to %{[Attachment][RawLog][Content][destination][address]}"

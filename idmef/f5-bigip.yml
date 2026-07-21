@@ -1,0 +1,17 @@
+name: f5-bigip
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/f5-bigip.yml
+ruleset: process_name_parsing
+notes: "BigIP audit and security events."
+rules:
+  - id: 3600
+    fields:
+      "[Category][0]": "Configuration.Change"
+      "[Priority]": "Medium"
+      "[Source][0][User]": "%{[Attachment][RawLog][Content][user][name]}"
+      "[Target][0][IP]": "%{[Attachment][RawLog][Content][destination][address]}"
+      "[Description]": "AUDIT action %{action} by %{[Attachment][RawLog][Content][user][name]} on %{[Attachment][RawLog][Content][destination][address]}"
+  - id: 3602
+    fields:
+      "[Category][0]": "Network.Security"
+      "[Priority]": "Medium"
+      "[Description]": "Port denial detected: %{[Attachment][RawLog][Content][message]}"

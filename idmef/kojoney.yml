@@ -1,0 +1,12 @@
+name: kojoney
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/kojoney.yml
+ruleset: ssh_parsing
+notes: "Kojoney SSH honeypot events inferred."
+rules:
+  - id: 20000
+    fields:
+      "[Category][0]": "Access.Attempt"
+      "[Priority]": "Medium"
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+      "[Target][0][User]": "%{[Attachment][RawLog][Content][user][target][name]}"
+      "[Description]": "SSH auth attempt for %{[Attachment][RawLog][Content][user][target][name]} from %{[Attachment][RawLog][Content][source][address]}"

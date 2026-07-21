@@ -1,0 +1,16 @@
+name: ironport
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/ironport.yml
+ruleset: ironport_parsing
+notes: "Mail gateway events (reject/accept/blacklist) inferred."
+rules:
+  - id: 24501
+    fields:
+      "[Category][0]": "Email.Delivery"
+      "[Priority]": "Info"
+      "[Target][0][IP]": "%{[Attachment][RawLog][Content][destination][address]}"
+      "[Description]": "Reverse DNS unknown for %{[Attachment][RawLog][Content][destination][address]}"
+  - id: 24502
+    fields:
+      "[Category][0]": "Email.Reputation"
+      "[Priority]": "Medium"
+      "[Description]": "ICID %{Num} REJECT SG %{[Attachment][RawLog][Content][message]}"

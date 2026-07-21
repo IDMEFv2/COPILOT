@@ -1,0 +1,16 @@
+name: dell-om
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/dell-om.yml
+ruleset: server_administrator_parsing
+notes: "Hardware/management events inferred."
+rules:
+  - id: 3800
+    fields:
+      "[Category][0]": "Hardware.Failure"
+      "[Priority]": "High"
+      "[Description]": "%{[Attachment][RawLog][Content][description]} (Chassis: %{[Attachment][RawLog][Content][chassisLocation]})"
+      "[Target][0][Hostname]": "%{[Attachment][RawLog][Content][destination][address]}"
+  - id: 3801
+    fields:
+      "[Category][0]": "Hardware.Status"
+      "[Priority]": "Info"
+      "[Description]": "Power supply returned to normal: %{[Attachment][RawLog][Content][description]}"

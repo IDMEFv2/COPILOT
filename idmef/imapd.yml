@@ -1,0 +1,17 @@
+name: imapd
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/imapd.yml
+ruleset: imapd_parsing
+notes: "IMAP authentication events inferred."
+rules:
+  - id: 25605
+    fields:
+      "[Category][0]": "Access.Failure"
+      "[Priority]": "Medium"
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+      "[Target][0][User]": "%{[Attachment][RawLog][Content][user][target][name]}"
+      "[Description]": "IMAP login failure for %{[Attachment][RawLog][Content][user][target][name]} from %{[Attachment][RawLog][Content][source][address]}"
+  - id: 25608
+    fields:
+      "[Category][0]": "Access.Success"
+      "[Priority]": "Info"
+      "[Description]": "IMAP login for %{[Attachment][RawLog][Content][user][name]} from %{[Attachment][RawLog][Content][source][address]}"

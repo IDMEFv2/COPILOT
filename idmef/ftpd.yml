@@ -1,0 +1,16 @@
+name: ftpd
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/ftpd.yml
+ruleset: ftpd_parsing
+notes: "FTP authentication events inferred."
+rules:
+  - id: 2300
+    fields:
+      "[Category][0]": "Access.Other"
+      "[Priority]": "Medium"
+      "[Description]": "Anonymous FTP login from %{[Attachment][RawLog][Content][source][address]} user %{[Attachment][RawLog][Content][user][name]}"
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+  - id: 2301
+    fields:
+      "[Category][0]": "Access.Failure"
+      "[Priority]": "Medium"
+      "[Description]": "FTP login failed for %{[Attachment][RawLog][Content][user][name]} from %{[Attachment][RawLog][Content][source][address]}"

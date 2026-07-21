@@ -1,0 +1,15 @@
+name: keepalived
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/keepalived.yml
+ruleset: keepalived_parsing
+notes: "High-availability and VRRP events."
+rules:
+  - id: 23201
+    fields:
+      "[Category][0]": "Service.StateChange"
+      "[Priority]": "Info"
+      "[Description]": "Keepalived stopping: %{[Attachment][RawLog][Content][desc]}"
+  - id: 23203
+    fields:
+      "[Category][0]": "Service.StateChange"
+      "[Priority]": "Medium"
+      "[Description]": "VRRP Instance %{[Attachment][RawLog][Content][data]} entering MASTER STATE"

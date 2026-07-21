@@ -1,0 +1,11 @@
+name: crontab
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/crontab.yml
+ruleset: crontab_parsing
+notes: "Inferred mapping for crontab edit events."
+rules:
+  - id: 23801
+    fields:
+      "[Category][0]": "Administration.Change"
+      "[Priority]": "Info"
+      "[Source][0][User]": "%{[Attachment][RawLog][Content][user][name]}"
+      "[Description]": "Crontab edit initiated by %{[Attachment][RawLog][Content][user][name]}"

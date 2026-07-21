@@ -1,0 +1,17 @@
+name: extreme-switch
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/extreme-switch.yml
+ruleset: extreme_switch_parsing
+notes: "Network device events."
+rules:
+  - id: 20101
+    fields:
+      "[Category][0]": "Access.Other"
+      "[Priority]": "Info"
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+      "[Target][0][Service]": "%{[Attachment][RawLog][Content][network][protocol]}"
+      "[Description]": "Login passed for user %{[Attachment][RawLog][Content][user][name]} via %{[Attachment][RawLog][Content][network][protocol]}"
+  - id: 20103
+    fields:
+      "[Category][0]": "Network.Interface"
+      "[Priority]": "Medium"
+      "[Description]": "Port %{[Attachment][RawLog][Content][interfaceport]} link down"

@@ -1,0 +1,17 @@
+name: juniper-srx
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/juniper-srx.yml
+ruleset: juniper_srx_parsing
+notes: "Juniper SRX security and flow events inferred."
+rules:
+  - id: 22001
+    fields:
+      "[Category][0]": "Network.Access"
+      "[Priority]": "Medium"
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+      "[Target][0][IP]": "%{[Attachment][RawLog][Content][destination][address]}"
+      "[Description]": "RT_FLOW event involving %{[Attachment][RawLog][Content][user][name]} from %{[Attachment][RawLog][Content][source][address]}"
+  - id: 22002
+    fields:
+      "[Category][0]": "Network.Anomaly"
+      "[Priority]": "Medium"
+      "[Description]": "ARP addr change: %{[Attachment][RawLog][Content][destination][address]} from %{[Attachment][RawLog][Content][src]} to %{[Attachment][RawLog][Content][dst]}"

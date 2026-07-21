@@ -1,0 +1,18 @@
+name: clamav
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/clamav.yml
+ruleset: virus_found_parsing
+notes: "Automatically inferred mappings from patterns and samples. Review especially file/path fields."
+rules:
+  - id: 3200
+    fields:
+      "[Category][0]": "Malware.Detection"
+      "[Priority]": "High"
+      "[Analyzer][Data]": ["Antivirus"]
+      "[Description]": "Virus detected: %{[Attachment][RawLog][Content][malware][name]} in %{[Attachment][RawLog][Content][filePath]}"
+      "[Target][0][Hostname]": "%{[Attachment][RawLog][Content][host][hostname]}"
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+  - id: 3201
+    fields:
+      "[Category][0]": "System.Maintenance"
+      "[Priority]": "Info"
+      "[Description]": "ClamAV database reloaded: %{[Attachment][RawLog][Content][message]}"

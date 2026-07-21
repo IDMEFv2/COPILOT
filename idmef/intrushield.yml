@@ -1,0 +1,15 @@
+name: intrushield
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/intrushield.yml
+ruleset: intrushield_parsing
+notes: "Fault/critical events inferred."
+rules:
+  - id: 24901
+    fields:
+      "[Category][0]": "Hardware.Failure"
+      "[Priority]": "High"
+      "[Description]": "%{[Attachment][RawLog][Content][desc]}"
+  - id: 24902
+    fields:
+      "[Category][0]": "Hardware.Unreachable"
+      "[Priority]": "High"
+      "[Description]": "Sensor unreachable: %{[Attachment][RawLog][Content][desc]}"

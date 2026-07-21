@@ -1,0 +1,12 @@
+name: ipfw
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/ipfw.yml
+ruleset: ipfw_parsing
+notes: "IPFW deny/accept events inferred."
+rules:
+  - id: 800
+    fields:
+      "[Category][0]": "Network.Dropped"
+      "[Priority]": "Medium"
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+      "[Target][0][IP]": "%{[Attachment][RawLog][Content][destination][address]}"
+      "[Description]": "IPFW deny: %{[Attachment][RawLog][Content][message]}"
