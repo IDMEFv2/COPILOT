@@ -1,0 +1,14 @@
+ruleset:
+  name: checkpoint
+  field: "[Attachment][RawLog][Content][message]"
+  predicate:
+    operator: in
+    operands:
+      - operator: variable
+        operands: "[Attachment][RawLog][Content][message]"
+      - operator: constant
+        operands: "product:"
+  rules:
+    - id: 100
+      pattern: "drop %{IPORHOST} (<|>)([\\w-]+) product: VPN-1 & FireWall-1; src: %{IPORHOST:[Attachment][RawLog][Content][source][address]}; s_port: %{DATA:[Attachment][RawLog][Content][source][p[...]"
+      samples: []

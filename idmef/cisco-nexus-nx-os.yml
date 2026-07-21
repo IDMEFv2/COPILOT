@@ -1,0 +1,5 @@
+name: cisco-nexus-nx-os
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/cisco-nexus-nx-os.yml
+ruleset: cisco_nx_os_parsing
+note: "Auto-generated IDMEF skeleton. Fields to be enriched in a follow-up pass."
+rules: []

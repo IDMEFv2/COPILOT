@@ -1,0 +1,23 @@
+ruleset:
+  name: arbor
+  field: "[Attachment][RawLog][Content][message]"
+  predicate:
+    operator: or
+    operands:
+      - operator: in
+        operands:
+          - operator: variable
+            operands: "[Attachment][RawLog][Content][message]"
+          - operator: constant
+            operands: "anomaly"
+      - operator: in
+        operands:
+          - operator: variable
+            operands: "[Attachment][RawLog][Content][message]"
+          - operator: constant
+            operands: "firstSeen"
+  rules:
+    - id: 4300
+      pattern: "anomaly ([a-zA-Z_-]+) id %{INT:[Attachment][RawLog][Content][id]} status %{NOTSPACE:[Attachment][RawLog][Content][status]} severity %{INT:[Attachment][RawLog][Content][severity]} s[...]"
+      samples:
+        - "Apr 17 06:52:57 arbordos.mynetwork.net pfDoS: anomaly Protocol id 92480 status ongoing severity 5 src 0.0.0.0/0 All dst 2.2.0.0/16 Intellig_ start 2005-04-17 06:45:41 +0200 duration 360[...]"

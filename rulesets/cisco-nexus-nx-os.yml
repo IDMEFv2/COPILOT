@@ -1,0 +1,23 @@
+ruleset:
+  name: cisco-nexus-nx-os
+  field: "[Attachment][RawLog][Content][event][original]"
+  predicate:
+    operator: or
+    operands:
+      - operator: in
+        operands:
+          - operator: variable
+            operands: "[Attachment][RawLog][Content][event][code]"
+          - operator: constant
+            operands: "AUTHPRIV-"
+      - operator: in
+        operands:
+          - operator: variable
+            operands: "[Attachment][RawLog][Content][event][code]"
+          - operator: constant
+            operands: "VIM-"
+  rules:
+    - id: 25200
+      pattern: "-SYSTEM_MSG: pam_aaa:Authentication failed for user %{NOTSPACE:[Attachment][RawLog][Content][user][name]} from %{NOTSPACE:[Attachment][RawLog][Content][user][target][name]}"
+      samples:
+        - "2012 Apr 14 02:05:09 ROUTER01901 %AUTHPRIV-3-SYSTEM_MSG: pam_aaa:Authentication failed for user admin from 10.10.27.222 – sshd[13983]"

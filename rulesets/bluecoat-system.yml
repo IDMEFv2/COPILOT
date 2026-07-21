@@ -1,0 +1,15 @@
+ruleset:
+  name: bluecoat-system
+  field: "[Attachment][RawLog][Content][message]"
+  predicate:
+    operator: equal
+    operands:
+      - operator: constant
+        operands: "ProxySG"
+      - operator: variable
+        operands: "[Attachment][RawLog][Content][process][name]"
+  rules:
+    - id: 11001
+      pattern: "%{WORD}:%{SPACE}%{WORD}%{SPACE}Access (?:L|l)og.+Connecting to primary server (?<serverName>.+) on port %{INT:port}.+NORMAL_EVENT"
+      samples:
+        - "Feb 11 14:59:40 192.168.10.11 ProxySG: E0000 Access Log FTP (im): Connecting to primary server 192.168.10.5 on port 21.(0) NORMAL_EVENT ../FTPClientAL.cpp 106"
