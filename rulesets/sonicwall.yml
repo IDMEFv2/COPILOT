@@ -1,0 +1,15 @@
+ruleset:
+  name: sonicwall_parsing
+  field: "[Attachment][RawLog][Content][message]"
+  predicate:
+    operator: in
+    operands:
+      - operator: variable
+        operands: "[Attachment][RawLog][Content][message]"
+      - operator: constant
+        operands: "id=firewall"
+  rules:
+    - id: 4600
+      pattern: "fw=%{IP:ipAddr} pri=%{INT:priority} c=%{INT:category} m=%{INT:Id} msg=\"(?<message>.+)\" n=%{INT:Id1} usr=%{NOTSPACE:[Attachment][RawLog][Content][user][target][name]} src=%{IP:[At[...]"
+      samples:
+        - "Mar 10 13:44:49 192.168.30.10 id=firewall sn=0006B11302A2 time=\"2006-03-10 13:44:50\" fw=216.123.166.2 pri=6 c=16 m=29 msg=\"Administrator login allowed\" n=40 usr=netadm src=192.168.3[...]"

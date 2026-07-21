@@ -1,0 +1,16 @@
+ruleset:
+  name: apc-emu
+  description:
+  field: "[Attachment][RawLog][Content][message]"
+  predicate:
+    operator: in
+    operands:
+      - operator: variable
+        operands: "[Attachment][RawLog][Content][event][original]"
+      - operator: constant
+        operands: "EMU"
+  rules:
+    - id: 2800
+      pattern: "Probe %{INT:[Attachment][RawLog][Content][APC-EMU][probe][number]:int} '%{DATA:[Attachment][RawLog][Content][APC-EMU][probe][name]}' high  humidity violation, '%{INT:[Attachment][R[...]"
+      samples:
+        - "Mar 28 04:22:18 enviro1 12.34.56.78 EMU: Probe 2 'Loc Env Probe 2' high  humidity violation, '40%RH'. 0x101C"

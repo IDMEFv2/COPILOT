@@ -1,0 +1,23 @@
+ruleset:
+  name: asa_pix_logs
+  field: "[Attachment][RawLog][Content][event][original]"
+  predicate:
+    operator: or
+    operands:
+      - operator: in
+        operands:
+          - operator: variable
+            operands: "[Attachment][RawLog][Content][message]"
+          - operator: constant
+            operands: "ASA-"
+      - operator: in
+        operands:
+          - operator: variable
+            operands: "[Attachment][RawLog][Content][message]"
+          - operator: constant
+            operands: "PIX-"
+  rules:
+    - id: 195
+      pattern: "-410001: Dropped %{NOTSPACE:[Attachment][RawLog][Content][network][transport]} %{NOTSPACE:[Attachment][RawLog][Content][network][protocol]} %{DATA} from %{DATA}:%{IP:[Attachment][R[...]"
+      samples:
+        - "Sep 20 18:25:50 ASA_NAME %ASA-4-410001: Dropped UDP DNS packet_type from source_interface:source_address/source_port to dest_interface:dest_address/dest_port; error_length_type length l[...]"

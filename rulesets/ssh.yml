@@ -1,0 +1,24 @@
+ruleset:
+  name: ssh
+  description: "SSH, is a cryptographic (encrypted) network protocol to allow remote login and other network services to operate securely over an unsecured network."
+  field: "[Attachment][RawLog][Content][message]"
+  predicate:
+    operator: in
+    operands:
+      - operator: variable
+        operands: "[Attachment][RawLog][Content][process][name]"
+      - operator: constant
+        operands: "sshd"
+  rules:
+    - id: 1902
+      author: ["CS GROUP - France"]
+      license: LGPL
+      version: '1.0'
+      category: Authentication
+      description: Failure SSH login
+      outcome: failure
+      pattern: "Failed password for %{USERNAME:[Attachment][RawLog][Content][destination][user][name]} from %{IPORHOST:[Attachment][RawLog][Content][source][address]} port %{POSINT:[Attachment][Ra[...]"
+      samples:
+        - "Dec  9 16:00:35 itguxweb2 sshd[24541]: Failed password for root from 12.34.56.78 port 1806"
+      copy:
+        "[Attachment][RawLog][Content][related][user]": "[Attachment][RawLog][Content][destination][user][name]"

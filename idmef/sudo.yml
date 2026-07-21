@@ -1,0 +1,16 @@
+name: sudo
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/sudo.yml
+ruleset: sudo
+rules:
+  - id: 2700
+    fields:
+      "[Target][0][User]": "%{[Attachment][RawLog][Content][target][user][name]}"
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+      "[Priority]": "Medium"
+      "[Category][0]": "Access.Other"
+      "[Description]": "Sudo command executed by %{[Attachment][RawLog][Content][target][user][name]}: %{[Attachment][RawLog][Content][message]}"
+  - id: 2701
+    fields:
+      "[Category][0]": "Access.Other"
+      "[Priority]": "Medium"
+      "[Description]": "Unauthorized sudo attempt: %{[Attachment][RawLog][Content][message]}"

@@ -1,0 +1,14 @@
+name: rsyslogd_parsing
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/rsyslog.yml
+ruleset: rsyslogd_parsing
+rules:
+  - id: 101000
+    fields:
+      "[Category][0]": "System.Service"
+      "[Priority]": "Info"
+      "[Description]": "rsyslogd exiting on signal %{signal_number}"
+  - id: 101001
+    fields:
+      "[Category][0]": "System.Service"
+      "[Priority]": "Info"
+      "[Description]": "rsyslogd start"

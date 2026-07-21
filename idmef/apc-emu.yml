@@ -1,0 +1,9 @@
+name: apc-emu
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/apc-emu.yml
+ruleset: apc-emu
+rules:
+  - id: 2800
+    fields:
+      "[Category][0]": "Environment.Hardware"
+      "[Priority]": "Medium"
+      "[Description]": "APC-EMU probe %{[Attachment][RawLog][Content][APC-EMU][probe][name]} high humidity: %{[Attachment][RawLog][Content][APC-EMU][probe][number]}"

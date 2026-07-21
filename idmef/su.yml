@@ -1,0 +1,14 @@
+name: su
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/su.yml
+ruleset: su
+rules:
+  - id: 10002
+    fields:
+      "[Category][0]": "Access.Other"
+      "[Priority]": "Medium"
+      "[Description]": "Bad su attempt: %{[Attachment][RawLog][Content][message]}"
+  - id: 10000
+    fields:
+      "[Category][0]": "Access.Other"
+      "[Priority]": "Info"
+      "[Description]": "su session: %{[Attachment][RawLog][Content][message]}"

@@ -1,0 +1,16 @@
+name: arpwatch_parsing
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/arpwatch.yml
+ruleset: arpwatch_parsing
+rules:
+  - id: 4200
+    fields:
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+      "[Category][0]": "Network.Anomaly"
+      "[Priority]": "Info"
+      "[Description]": "New ARP activity for %{[Attachment][RawLog][Content][source][address]}"
+  - id: 4201
+    fields:
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+      "[Category][0]": "Network.Anomaly"
+      "[Priority]": "Medium"
+      "[Description]": "Ethernet address changed for %{[Attachment][RawLog][Content][source][address]}"

@@ -1,0 +1,29 @@
+name: ssh
+source: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/ssh.yml
+ruleset: ssh
+rules:
+  - id: 1902
+    fields:
+      "[@metadata][IDMEFv2][source]": "source"
+      "[@metadata][IDMEFv2][target]": "host"
+      "[Category][0]": "Access.Other"
+      "[Analyzer][Data]": ["Log", "Auth"]
+      "[Analyzer][Type]": "Cyber"
+      "[Source][0][Protocol]": ["tcp", "ssh"]
+      "[Source][0][IP]": "%{[Attachment][RawLog][Content][source][address]}"
+      "[Target][0][Service]": "%{[Attachment][RawLog][Content][process][name]}"
+      "[Target][0][User]": "%{[Attachment][RawLog][Content][destination][user][name]}"
+      "[Priority]": "Medium"
+      "[Description]": "Failed SSH login for %{[Attachment][RawLog][Content][destination][user][name]} from %{[Attachment][RawLog][Content][source][address]}"
+  - id: 1908
+    fields:
+      "[@metadata][IDMEFv2][source]": "source"
+      "[@metadata][IDMEFv2][target]": "host"
+      "[Category][0]": "Access.Other"
+      "[Analyzer][Data]": ["Log", "Auth"]
+      "[Analyzer][Type]": "Cyber"
+      "[Source][0][Protocol]": ["tcp", "ssh"]
+      "[Target][0][Service]": "%{[Attachment][RawLog][Content][process][name]}"
+      "[Target][0][User]": "%{[Attachment][RawLog][Content][destination][user][name]}"
+      "[Priority]": "Info"
+      "[Description]": "Successful SSH login for %{[Attachment][RawLog][Content][destination][user][name]} from %{[Attachment][RawLog][Content][source][address]}"

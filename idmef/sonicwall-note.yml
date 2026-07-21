@@ -1,0 +1,3 @@
+name: sonicwall_parsing
+source_ruleset: https://github.com/IDMEFv2/Concerto-SIEM/blob/3961e482f44e213e6772d4a108e2f4e25dce9491/logstash/rulesets/sonicwall.yml
+note: Additional IDMEF conversions pending for full rule set
